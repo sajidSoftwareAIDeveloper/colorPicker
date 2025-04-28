@@ -1,19 +1,15 @@
-.picker-show_image{
-    /* border-radius: 5px; */
-    height: auto;
-    width: auto;
-    /* cursor: crosshair; */
+.canvas-image{
+    max-height: 500px;
+    max-width: 500px;
     cursor: none;
-
   } 
-
   .color-show{
     height: 40px;
     width: auto;
   }
   .color-value-show{
     display: flex;
-   position: relative;
+   /* position: relative; */
    margin-top: -30px;
    justify-content: center;
 
@@ -34,6 +30,8 @@
     align-items: center;
     overflow: hidden;
     border-spacing: 0px;
+    z-index: 9999;
+
  }
   .table-show-px-color{
       border: 1.5px solid white ;
@@ -42,7 +40,7 @@
       border-collapse: separate;
       border-spacing: 0px;
       text-align: center;
-      overflow: hidden; 
+      overflow:hidden; 
   }
 
   .table-td {
@@ -127,10 +125,14 @@
     transform: translateY(-50%);
   }
 
-  canvas {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    /* max-width: 100%; */
-    display: block;
+
+
+  @media screen and (max-width: 530px) {
+
+    .canvas-image{
+      max-width: 100% !important;
+      height: auto !important;
+    } 
+  
+    
   }

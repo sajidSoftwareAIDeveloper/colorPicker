@@ -11,7 +11,16 @@ export const Image = () => {
   const [image, setImage] = useState(null);
   const [isOpenCamera, setIsOpenCamera] = useState(false);
 //   const [isValid, setIsValid] = useState(false);
+  const[isActivated,setIsActivated]=useState(false);
+
   const [stream, setStream] = useState(null);
+
+  const [windowWidth,setWindowWidth]=useState();
+
+  // useEffect(()=>{
+  //   setWindowWidth(window.innerWidth);
+  //   // console.log(window.innerWidth);
+  // },[window.innerWidth])
 
   const cameraHandle = async () => {
     setIsOpenCamera(true);
@@ -72,6 +81,10 @@ export const Image = () => {
                 <button onClick={cameraHandle}>  <img className="camera" src="camera.png" alt="camera" />  </button>
             </div>
 
+            <div>
+              <button className='isactivated' onClick={()=>{setIsActivated(!isActivated)}}>{isActivated?'inactivate':'activate'}</button>
+            </div>
+
             <canvas ref={canvasRef} style={{ display: "none" }} />
             <div>
                     <button onClick={fileHandle}><img className="file" src="fileIcon.png" alt="file"/> </button>
@@ -91,9 +104,17 @@ export const Image = () => {
          isOpenCamera 
          && 
         <div className="popup">
-            <video ref={videoRef} autoPlay className="video_style" />
-            <button className="cut_camera" onClick={closedCameraHandle}>X</button>
+
+            <video ref={videoRef} autoPlay className="video_style"/>
+            
             <button className="clickPhoto" onClick={captureImage}></button>
+            
+            <button className="cut_camera" 
+              onClick={closedCameraHandle}
+              // style={{marginLeft:windowWidth>500?(windowWidth/2+210):windowWidth-40}}
+              >X
+            </button>
+
         </div>
       }
 
@@ -107,7 +128,16 @@ export const Image = () => {
 
             } */}
 
-          <ColorPicker/>   
+          {
+            isActivated===true
+            ? <ColorPicker/>   
+            : 
+            <div>
+                <img src={localStorage.getItem('imageInfo')} alt="Captured" className="show_image" />  
+            </div>
+          }
+
+          {/* <ColorPicker/>    */}
       </div>
 
 

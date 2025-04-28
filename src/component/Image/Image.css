@@ -5,11 +5,9 @@
     right: 0px;
     display: grid;
     grid-template-columns: 1;
-    position: fixed;
+    /* position: fixed; */
     justify-content: center;
     justify-items: center;
-    width:100%;
-    height:100%;
     background-color: rgb(192, 252, 229);
     column-gap: 0px;
     position: absolute;
@@ -21,27 +19,30 @@
     width: 30px;
     font-size: 25px;
     cursor: pointer;
-    margin-left: 615px;
+    /* margin-left:200px; */
     margin-top: 9px;
     position: inherit; 
+    margin-left: 475px;
   }
+
   .video_style{
-    width: auto; 
-    height:auto;
+    width: 500px; 
+    height:500px;
     border: 10px solid rgb(189, 186, 186);
   }
   
-  .show_image{
-    border-radius: 5px;
-    height: 400px;
-    width: 400px;
-  }
 
   .file, .camera{
   width: 20px;
   height: 20px;
   border-radius: 2px;
   cursor: pointer;
+}
+.isactivated{
+  color: rgb(252, 38, 177);
+  cursor: pointer;
+  font-size: 20px;
+  background-color: none;
 }
 
 .clickPhoto{
@@ -61,14 +62,7 @@
 .main_class{
   margin: -8px;
 }
-.heading{
-  margin-top:-11px;
-  margin-right:10px;
-  margin-left: 60px;
-  color:white;
-  font-size:40px;
 
-}
 h1{
   color: red;
   margin-top: -75px;
@@ -88,24 +82,33 @@ h1{
   background-color: rgba(29, 244, 190, 0.408);
 }
 
-@media screen and (max-width: 768px) {
+.show_image{
+  max-height: 500px;
+  max-width: 500px;
+}
 
-  /* .video_style{
-    height: auto;
-    width: auto; 
-  }*/
+@media screen and (max-width: 530px) {
 
-  /* .popup{
-    height: 100%;
-    width: 100%;
-  }  */
-  /* .cut_camera{
-    justify-content: center;
-    justify-items: center;
-  } */
+  .show_image{
+    max-width: 100% !important;
+    height: auto !important;
+  } 
+
+  .popup{
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .video_style{
+    max-width: max-content !important;
+    height: max-content !important;
+  }
 
   .cut_camera{
-    /* position: absolute;        */             
-    left: 98%;                
+    /* position: fixed;
+    margin-right:45%;
+    margin-top: 8px; */
+    margin-right: 200px;
   }
+  
 }

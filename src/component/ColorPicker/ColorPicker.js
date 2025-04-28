@@ -6,60 +6,73 @@ export const ColorPicker=()=>{
 
     const canvasRef = useRef(null);
     const imgRef = useRef(null);
-    const [color, setColor] = useState(null);
+    const [color, setColor] = useState('#000000');
     const[selectImagePixlInfo,setSelectImagePixelInfo]=useState([]);
 
     const [visible, setVisible] = useState(false);
     const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0});
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0});
 
-
     useEffect(() => {
-        okkkkkkkkk();
+        // handleCanvasWindowSize();
+        callingCanvas();
+        // console.log(window.innerHeight,window.innerWidth);
     },[localStorage.getItem('imageInfo')]);
 
-    function okkkkkkkkk(){
+    function handleCanvasWindowSize(wheight,wwidth){
+
+        if(wheight<500 && wwidth<500){
+            return [wheight-131,wwidth-30]
+        }
+        else if(wheight<500 || wwidth<500){
+
+            if(wheight<500 ){
+                return [wheight,500-131]
+            }
+            else{
+                return [500,wwidth-30]
+            }
+
+        }
+        else{
+            return [500,500]
+        }
+    }
+
+    function callingCanvas() {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const img = imgRef.current;
+        const drawImage = (targetWidth, targetHeight) => {
+          canvas.width = targetWidth;
+          canvas.height = targetHeight;
+      
+          ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+        };
+      
+        img.onload = () => {
+           const[targetHeight,targetWidth]= handleCanvasWindowSize(window.innerHeight,window.innerWidth);
+          drawImage(targetWidth,targetHeight);;
 
-        const drawImage = () => {
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-
-            // if(canvas.width>window.innerWidth){canvas.width=window.innerWidth-60}
-            // if(canvas.height>window.innerHeight){canvas.height=window.innerHeight-124}
-            //     console.log( window.innerHeight, window.innerWidth);
-        
-            canvas.style.width = `${img.width}px`;
-            canvas.style.height = `${img.height}px`;
-
-            // console.log(canvas.width,canvas.height);
-        
-            ctx.drawImage(img, 0, 0);
-          };
-        
-          img.onload = () => {
-            drawImage();
-          };
-        
-          const handleResize = () => {
-            drawImage();
-                // console.log( window.innerHeight, window.innerWidth);
-          };
-        
-        // console.log(canvas.width,canvas.height);
-
+        };
+      
+        const handleResize = () => {
+        //   drawImage(500, 500);
+            const[targetHeight,targetWidth]= handleCanvasWindowSize(window.innerHeight,window.innerWidth);
+            drawImage(targetWidth,targetHeight);
+            // console.log(targetHeight,targetWidth);
+        };
+      
         window.addEventListener('resize', handleResize);
-
+      
         img.crossOrigin = 'anonymous';
         img.src = localStorage.getItem('imageInfo');
-        
+      
         return () => {
-            window.removeEventListener('resize', handleResize);
+          window.removeEventListener('resize', handleResize);
         };
-
-    }
+      }
+      
 
     
     const clickHandle =() => {
@@ -67,11 +80,12 @@ export const ColorPicker=()=>{
         
     };
 
-        const size=9;
-        const half=Math.floor(size/2);
+
+    const size=9;
+    const half=Math.floor(size/2);
     
     function mouseMoveHandle(e){
-        // okkkkkkkkk();
+
         const canvas = canvasRef.current;
         
         // const ctx = canvas.getContext('2d');
@@ -95,17 +109,32 @@ export const ColorPicker=()=>{
         setCursorPosition({x,y});
 
         // show data arround the images
-        const offsetPos={x,y};
+        // const offsetPos={x,y};
         
-        if (offsetPos.x+100> 400) {
-            offsetPos.x-=100;
-        }
-        if (offsetPos.y+100> 400) {
-            offsetPos.y-=100;
-        }
+        // if (offsetPos.x+100> 300) {
+        //     offsetPos.x-=100;
+        // }
+        // if (offsetPos.y+100> 300) {
+        //     offsetPos.y-=100;
+        // }
+        
+ 
+
 
         // console.log(windowHeight,windowWidth);
-        setHoverPosition({x:offsetPos.x,y:offsetPos.y});
+        // setHoverPosition({x:offsetPos.x,y:offsetPos.y});
+       setHoverPosition({x:x-52,y:y-52});  // after using position absolute
+
+       // using position fixed
+
+    //    const ww=Math.floor(window.innerWidth);
+    //    setHoverPosition(prev=>({...prev,x:59+15+x}));
+    //    if(ww>500){
+    //         setHoverPosition(prev=>({y:((ww-560)/2)+15+y}));
+    //     }
+    //     else{
+    //         setHoverPosition(prev=>({...prev,y:15+y}));
+    //     }
         // console.log(x,y);
     }
 
@@ -113,23 +142,23 @@ export const ColorPicker=()=>{
     <div style={{ position: 'relative', display: 'inline-block' }}>
 
         <div  style={{ position: 'relative' }}>  
-            {   visible && 
+            {/* {   visible && 
                 <div className='circle-cursor' style={{top: cursorPosition.y,  left: cursorPosition.x,}}>
                         <span className="line top" />
                         <span className="line bottom" />
                         <span className="line left" />
                         <span className="line right" />
                </div>
-            }
+            } */}
             <canvas
                 ref={canvasRef}
                 onClick={clickHandle}
-                className="picker-show_image"
+                className="canvas-image"
                 onMouseEnter={()=>setVisible(true)}
                 onMouseLeave={()=>{setVisible(false)}}
                 onMouseMove={mouseMoveHandle}
             />
-            <img ref={imgRef}  alt="hidden" style={{ display: 'none' }}/>
+            <img ref={imgRef} className="canvas-image"  alt="hidden" style={{ display: 'none' }}/>
         </div>
 
         {color 
